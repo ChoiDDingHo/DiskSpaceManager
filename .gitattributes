@@ -1,0 +1,7 @@
+# 줄바꿈을 저장소에서는 LF 로 통일한다.
+# Windows 에서 작업하더라도 체크아웃할 때 알아서 CRLF 로 바뀐다.
+* text=auto eol=lf
+
+# 이미지 등 바이너리는 손대지 않는다
+*.png binary
+*.ico binary

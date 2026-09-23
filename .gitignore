@@ -1,0 +1,32 @@
+# 가상환경 — requirements.txt 로 각자 만들면 된다
+.venv/
+venv/
+env/
+
+# 파이썬 캐시
+__pycache__/
+*.py[cod]
+*.pyd
+
+# 빌드 산출물 (PyInstaller)
+build/
+dist/
+*.spec
+
+# 실행 중 생기는 설정과 로그
+# 기본 위치는 %LOCALAPPDATA%\DiskSpaceManager 이지만,
+# DSM_DATA_DIR 로 프로젝트 안을 지정했을 때를 대비해 막아 둔다
+logs/
+audit/
+usage/
+config.json
+config.bak
+config.tmp
+config.corrupt.json
+
+# 편집기 / OS
+.vscode/
+.idea/
+*.swp
+Thumbs.db
+desktop.ini

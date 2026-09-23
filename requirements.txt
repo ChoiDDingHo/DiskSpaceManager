@@ -1,0 +1,5 @@
+# DiskSpaceManager Phase 1 (MVP)
+# 설정창은 표준 라이브러리 tkinter 를 쓰므로 별도 GUI 패키지가 필요 없다.
+pystray==0.19.5
+pillow==12.3.0
+Send2Trash==2.1.0
