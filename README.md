@@ -5,10 +5,25 @@
 
 ---
 
-## 1. 실행
+## 1. 준비물
+
+| 항목 | 요구 사항 |
+|---|---|
+| OS | **Windows 전용** (레지스트리·트레이·Win32 API 사용) |
+| Python | **3.10 이상** (3.14 에서 개발·검증) |
+| tkinter | 파이썬에 포함. python.org 설치본이면 기본 포함 |
+| 패키지 | `pystray`, `pillow`, `Send2Trash` — `requirements.txt` |
+
+> Microsoft Store 판이나 일부 배포판은 tkinter 가 빠져 있을 수 있습니다.
+> `python -c "import tkinter"` 로 먼저 확인하세요.
+
+## 2. 내려받아 실행하기
 
 ```bat
-:: 최초 1회
+git clone https://github.com/ChoiDDingHo/DiskSpaceManager.git
+cd DiskSpaceManager
+
+python -m venv .venv
 .venv\Scripts\python.exe -m pip install -r requirements.txt
 
 :: 실행 (콘솔 창 없이 트레이에만 상주)
@@ -18,9 +33,29 @@
 개발 중 로그를 콘솔에서 보고 싶으면 `python.exe` 로 실행하세요.
 등록된 프로파일이 하나도 없으면 첫 실행 시 설정창이 자동으로 열립니다.
 
+## 3. exe 로 빌드하기
+
+검사기에 파이썬을 설치하지 않으려면 단일 exe 로 만들어 배포합니다.
+
+```bat
+.venv\Scripts\python.exe -m pip install pyinstaller
+
+.venv\Scripts\python.exe -m PyInstaller --noconsole --onefile ^
+  --name DiskSpaceManager ^
+  --icon assets\app_icon.ico ^
+  --add-data "assets;assets" ^
+  DiskSpaceManager.py
+```
+
+`dist\DiskSpaceManager.exe` 가 만들어집니다 (약 19MB, 빌드 20초 내외).
+**`--add-data` 를 빼먹으면** 트레이 아이콘이 기본 도형으로 대체됩니다.
+
+exe 는 파이썬이 없는 PC에서도 그대로 실행되며, 설정과 로그는 똑같이
+`%LOCALAPPDATA%\DiskSpaceManager\` 에 생깁니다.
+
 ---
 
-## 2. 트레이 메뉴
+## 4. 트레이 메뉴
 
 | 항목 | 동작 |
 |---|---|
@@ -50,7 +85,7 @@
 
 ---
 
-## 3. 설정
+## 5. 설정
 
 ### 관리 폴더(프로파일)
 
@@ -162,7 +197,7 @@
 
 ---
 
-## 4. 안전장치
+## 6. 안전장치
 
 - 드라이브 루트(`D:\`), Windows·Program Files·ProgramData·AppData, 프로그램 자신의 폴더는 **등록 자체가 거부**됩니다
 - 보호 폴더를 품고 있는 상위 경로도 거부됩니다
@@ -175,7 +210,7 @@
 
 ---
 
-## 5. 자원 사용
+## 7. 자원 사용
 
 검사 설비가 도는 PC에 상주하므로, 정리 작업이 설비를 방해하지 않도록 스스로를
 낮은 자리에 둡니다.
@@ -202,7 +237,7 @@
 
 ---
 
-## 6. 로그
+## 8. 로그
 
 설정과 로그는 `%LOCALAPPDATA%\DiskSpaceManager\` 에 저장됩니다.
 `DSM_DATA_DIR` 환경변수로 공용 경로를 지정하면 검사기 여러 대에 같은 설정을
@@ -243,7 +278,7 @@ usage\usage-YYYYMM.csv     사용량 추이 (기록을 켠 경우)
 
 ---
 
-## 7. 도입 절차 (권장)
+## 9. 도입 절차 (권장)
 
 1. 검사기 **1대**에 설치하고 전역 모의실행을 켠 채 **2주** 운영
 2. 감사 로그 CSV로 "지워질 뻔한 것"이 맞는지 검증 — 특히 불량 이미지가 대상에 없는지
@@ -253,7 +288,7 @@ usage\usage-YYYYMM.csv     사용량 추이 (기록을 켠 경우)
 
 ---
 
-## 8. Phase 1 범위와 다음 단계
+## 10. 개발 단계
 
 **Phase 1 (완료)**
 트레이 상주 · 폴더 프로파일 · 기간 기준 삭제 · 모의실행 · 감사 로그 · 설정창
@@ -273,7 +308,7 @@ Phase 3 기능은 **전부 기본 꺼짐**입니다. 설정에서 켜야 동작�
 
 ---
 
-## 9. 구조
+## 11. 구조
 
 ```
 DiskSpaceManager.py   진입점 (단일 인스턴스, 기동/종료)
